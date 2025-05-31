@@ -66,7 +66,6 @@ function createBubbleComponent(selectedText, onAsk) {
         selectedTextDiv.textContent = truncatedText;
         selectedTextDiv.style.cssText = `
             font-weight: 400 !important;
-            cursor: pointer !important;
             padding: 12px 16px !important;
             background: rgba(20, 20, 20, 0.6) !important;
             border: 1px solid rgba(255, 255, 255, 0.1) !important;
@@ -87,7 +86,7 @@ function createBubbleComponent(selectedText, onAsk) {
                 bottom: 100% !important;
                 left: 0 !important;
                 right: 0 !important;
-                background: rgba(20, 20, 20, 0.6) !important;
+                background: rgb(20, 20, 20) !important;
                 color: #e8e8e8 !important;
                 padding: 12px 16px !important;
                 border-radius: 12px !important;
@@ -226,7 +225,6 @@ function createBubbleComponent(selectedText, onAsk) {
         transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
     `;
 
-    customInput.style.setProperty('::placeholder', 'color: rgba(246, 0, 0, 0.6) !important');
 
     customInput.addEventListener('focus', () => {
         customInput.style.borderColor = 'rgba(255, 20, 147, 0.5)';
@@ -240,6 +238,12 @@ function createBubbleComponent(selectedText, onAsk) {
         customInput.style.boxShadow = 'none';
         customInput.style.transform = 'translateY(0)';
     });
+    
+    customInput.style.setProperty('--placeholder-color', 'rgb(255, 255, 255)')
+    const style = document.createElement('style');
+    style.textContent = ` textarea { --placeholder-color: rgb(255, 255, 255); } textarea::placeholder { color: var(--placeholder-color) !important; } `; document.head.appendChild(style);
+    document.head.appendChild(style);
+
 
     bubble.appendChild(customInput);
 
@@ -333,7 +337,6 @@ function createBubbleComponent(selectedText, onAsk) {
     return bubble;
 }
 
-// Export for use in content.js
 if (typeof module !== 'undefined' && module.exports) {
     module.exports = { createBubbleComponent };
 }

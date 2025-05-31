@@ -7,12 +7,17 @@ const CURSOR_POSITION = {
 
 const SUMMARY_PROMPT = "Summarize the following text: "
 const EXPLAIN_PROMPT = "Explain the following text: "
+let SYSTEM_PROMPT = null;
+let API_KEY = null;
+
 
 async function init() {
     try {
 
         setupListeners();
-        const API_KEY = await getApiKey();
+        API_KEY = await getStorageKey('geminiApiKey');
+        SYSTEM_PROMPT = await getStorageKey('systemPrompt');
+
     } catch (error) {
         console.error(error)
     }
@@ -88,29 +93,24 @@ function openBubbleAtCursor(selectedText = null) {
 }
 
 // Handle Ask callback from bubble component
-function handleAsk(action, selectedText, customQuestion) {
-    console.log('Action:', action);
-    console.log('Selected Text:', selectedText);
-    console.log('Custom Question:', customQuestion);
+async function handleAsk(action, selectedText, customQuestion) {
     
-    // Remove the bubble after action
     const bubble = document.getElementById('ai-cursor-bubble');
     if (bubble) {
         bubble.remove();
     }
     
-    // Here you can integrate with your existing AI functionality
-    // For example:
+    let prompt = selectedText;
     if (action === 'summarize') {
-        console.log('Summarizing:', selectedText);
-        // Call your summarize API
+        prompt = SUMMARY_PROMPT + selectedText;
     } else if (action === 'explain') {
-        console.log('Explaining:', selectedText);
-        // Call your explain API
+        prompt = EXPLAIN_PROMPT + selectedText;
     } else if (action === 'custom') {
-        console.log('Custom question:', customQuestion, 'about:', selectedText);
-        // Call your AI with custom question
+        prompt = customQuestion + " " + selectedText;
     }
+
+    const response = await askAi(API_KEY, SYSTEM_PROMPT, prompt);
+    console.log(response);
 }
 
 function positionBubble(bubble) {
@@ -135,7 +135,7 @@ function positionBubble(bubble) {
 }
 
 
-function getApiKey() {
+function getStorageKey(key) {
     return new Promise((resolve, reject) => {
         try {
             if (!chrome.storage || !chrome.storage.sync) {
@@ -144,12 +144,12 @@ function getApiKey() {
                 return;
             }
 
-            chrome.storage.sync.get(['geminiApiKey'], (result) => {
+            chrome.storage.sync.get([key], (result) => {
                 if (chrome.runtime.lastError) {
                     console.error('Chrome storage error:', chrome.runtime.lastError);
                     resolve(null);
                 } else {
-                    resolve(result.geminiApiKey);
+                    resolve(result[key]);
                 }
             });
         } catch (error) {
