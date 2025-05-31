@@ -55,15 +55,12 @@ function handleTextSelection() {
     }
 }
 
-// Handle context menu (right-click)
 function handleContextMenu(event) {
     const selectedText = getSelectedText();
     
     if (selectedText) {
-        // Remove any existing context menu
         removeCustomContextMenu();
         
-        // Create custom context menu
         const contextMenu = document.createElement('div');
         contextMenu.id = 'ask-ai-context-menu';
         contextMenu.style.cssText = `
@@ -81,11 +78,9 @@ function handleContextMenu(event) {
         `;
         contextMenu.textContent = '🤖 Ask AI about this text';
         
-        // Position near cursor
         contextMenu.style.left = event.pageX + 'px';
         contextMenu.style.top = event.pageY + 'px';
         
-        // Add click handler
         contextMenu.addEventListener('click', (e) => {
             e.preventDefault();
             e.stopPropagation();
@@ -93,10 +88,8 @@ function handleContextMenu(event) {
             handleAskAI();
         });
         
-        // Add to page
         document.body.appendChild(contextMenu);
         
-        // Remove menu after 3 seconds or on any click
         setTimeout(removeCustomContextMenu, 3000);
         document.addEventListener('click', removeCustomContextMenu, { once: true });
     }
@@ -282,7 +275,8 @@ async function queryGemini(action, text, apiKey) {
     
     const prompt = prompts[action] || prompts.explain;
     
-    const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${apiKey}`, {
+    const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
+    const response = await fetch(API_URL, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',

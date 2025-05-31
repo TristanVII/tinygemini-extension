@@ -3,20 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- google font Raleway -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <!-- Font Awesome CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
     <title>Ask AI Settings</title>
     <link rel="stylesheet" href="popup.css">
 </head>
 <body>
+    <div class="notifications">
+    </div>
+
     <div class="container">
         <div class="header">
-            <div class="logo">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
-                    <path d="M2 17L12 22L22 17" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
-                    <path d="M2 12L12 17L22 12" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
-                </svg>
-            </div>
-            <h1>Ask AI</h1>
+            <h1>Settings</h1>
         </div>
         
         <div class="content">
@@ -24,11 +27,8 @@
                 <label for="apiKey">Gemini API Key</label>
                 <div class="input-container">
                     <input type="password" id="apiKey" placeholder="Enter your Gemini API key...">
-                    <button type="button" id="toggleKey" class="toggle-btn">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M1 12S5 4 12 4s11 8 11 8-4 8-11 8S1 12 1 12z" stroke="currentColor" stroke-width="2"/>
-                            <circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="2"/>
-                        </svg>
+                    <button type="button" id="togglePassword" class="eye-toggle" aria-label="Toggle password visibility">
+                        <i class="fas fa-eye eye-icon"></i>
                     </button>
                 </div>
             </div>
@@ -36,25 +36,8 @@
             <button type="button" id="saveKey" class="save-btn">Save API Key</button>
             
             <div class="status" id="status"></div>
-            
-            <div class="info">
-                <h3>How to use:</h3>
-                <ol>
-                    <li>Select any text on a webpage</li>
-                    <li>Press <kbd>Option + A</kbd></li>
-                    <li>A chat bubble will appear with your selected text</li>
-                </ol>
-                
-                <div class="help">
-                    <p>Don't have a Gemini API key?</p>
-                    <a href="https://makersuite.google.com/app/apikey" target="_blank" class="help-link">
-                        Get your free API key →
-                    </a>
-                </div>
-            </div>
         </div>
     </div>
-    
     <script src="popup.js"></script>
 </body>
 </html> 
