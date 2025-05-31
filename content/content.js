@@ -95,11 +95,6 @@ function openBubbleAtCursor(selectedText = null) {
 // Handle Ask callback from bubble component
 async function handleAsk(action, selectedText, customQuestion) {
     
-    const bubble = document.getElementById('ai-cursor-bubble');
-    if (bubble) {
-        bubble.remove();
-    }
-    
     let prompt = selectedText;
     if (action === 'summarize') {
         prompt = SUMMARY_PROMPT + selectedText;
@@ -110,7 +105,7 @@ async function handleAsk(action, selectedText, customQuestion) {
     }
 
     const response = await askAi(API_KEY, SYSTEM_PROMPT, prompt);
-    console.log(response);
+    return response;
 }
 
 function positionBubble(bubble) {
