@@ -16,8 +16,8 @@ function createBubbleComponent(selectedText, onAsk) {
         border-radius: 16px !important;
         padding: 24px !important;
         box-shadow: 
-            0 8px 32px rgba(0, 0, 0, 0.3),
-            0 2px 8px rgba(0, 0, 0, 0.2),
+            0 8px 32px rgba(0, 0, 0, 0.3) !important,
+            0 2px 8px rgba(0, 0, 0, 0.2) !important,
             inset 0 1px 0 rgba(255, 255, 255, 0.05) !important;
         z-index: 999999 !important;
         max-width: 380px !important;
@@ -40,12 +40,12 @@ function createBubbleComponent(selectedText, onAsk) {
         style.textContent = `
             @keyframes slideIn {
                 from {
-                    opacity: 0;
-                    transform: translateY(10px) scale(0.95);
+                    opacity: 0 !important;
+                    transform: translateY(10px) scale(0.95) !important;
                 }
                 to {
-                    opacity: 1;
-                    transform: translateY(0) scale(1);
+                    opacity: 1 !important;
+                    transform: translateY(0) scale(1) !important;
                 }
             }
         `;
@@ -67,6 +67,7 @@ function createBubbleComponent(selectedText, onAsk) {
         selectedTextDiv.style.cssText = `
             font-weight: 400 !important;
             padding: 12px 16px !important;
+            cursor: pointer !important;
             background: rgba(20, 20, 20, 0.6) !important;
             border: 1px solid rgba(255, 255, 255, 0.1) !important;
             border-radius: 12px !important;
@@ -96,29 +97,37 @@ function createBubbleComponent(selectedText, onAsk) {
                 transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
                 margin-bottom: 8px !important;
                 word-wrap: break-word !important;
-                z-index: 1000000 !important;
+                z-index: 1000001 !important;
                 display: block !important;
                 border: 1px solid rgba(255, 255, 255, 0.1) !important;
                 box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3) !important;
                 backdrop-filter: blur(10px) !important;
+                pointer-events: none !important;
+                max-width: 320px !important;
+                white-space: pre-wrap !important;
             `;
 
             // Add hover events with dark theme transitions
-            selectedTextDiv.addEventListener('mouseenter', () => {
-                selectedTextDiv.style.background = 'rgba(20, 20, 20, 0.8)';
-                selectedTextDiv.style.borderColor = 'rgba(255, 20, 147, 0.3)';
-                hoverPopup.style.opacity = '1';
-                hoverPopup.style.visibility = 'visible';
+            selectedTextDiv.addEventListener('mouseenter', (e) => {
+                console.log('Mouse entered selected text div');
+                selectedTextDiv.style.setProperty('background', 'rgba(20, 20, 20, 0.8)', 'important');
+                selectedTextDiv.style.setProperty('border-color', 'rgba(255, 20, 147, 0.3)', 'important');
+                hoverPopup.style.setProperty('opacity', '1', 'important');
+                hoverPopup.style.setProperty('visibility', 'visible', 'important');
+                console.log('Popup should be visible now');
             });
 
-            selectedTextDiv.addEventListener('mouseleave', () => {
-                selectedTextDiv.style.background = 'rgba(20, 20, 20, 0.6)';
-                selectedTextDiv.style.borderColor = 'rgba(255, 255, 255, 0.1)';
-                hoverPopup.style.opacity = '0';
-                hoverPopup.style.visibility = 'hidden';
+            selectedTextDiv.addEventListener('mouseleave', (e) => {
+                console.log('Mouse left selected text div');
+                selectedTextDiv.style.setProperty('background', 'rgba(20, 20, 20, 0.6)', 'important');
+                selectedTextDiv.style.setProperty('border-color', 'rgba(255, 255, 255, 0.1)', 'important');
+                hoverPopup.style.setProperty('opacity', '0', 'important');
+                hoverPopup.style.setProperty('visibility', 'hidden', 'important');
             });
 
+            // Add the popup to the container BEFORE the selected text div
             selectedTextContainer.appendChild(hoverPopup);
+            console.log('Hover popup created and added for text:', selectedText.substring(0, 20) + '...');
         }
 
         selectedTextContainer.appendChild(selectedTextDiv);
@@ -156,12 +165,12 @@ function createBubbleComponent(selectedText, onAsk) {
     
     // Add shimmer effect
     summarizeBtn.addEventListener('mouseenter', () => {
-        summarizeBtn.style.transform = 'translateY(-1px)';
-        summarizeBtn.style.boxShadow = '0 4px 15px rgba(255, 20, 147, 0.3)';
+        summarizeBtn.style.transform = 'translateY(-1px) !important';
+        summarizeBtn.style.boxShadow = '0 4px 15px rgba(255, 20, 147, 0.3) !important';
     });
     summarizeBtn.addEventListener('mouseleave', () => {
-        summarizeBtn.style.transform = 'translateY(0)';
-        summarizeBtn.style.boxShadow = 'none';
+        summarizeBtn.style.transform = 'translateY(0) !important';
+        summarizeBtn.style.boxShadow = 'none !important';
     });
     summarizeBtn.addEventListener('click', () => {
         onAsk('summarize', selectedText, '');
@@ -189,12 +198,12 @@ function createBubbleComponent(selectedText, onAsk) {
     `;
 
     explainBtn.addEventListener('mouseenter', () => {
-        explainBtn.style.transform = 'translateY(-1px)';
-        explainBtn.style.boxShadow = '0 4px 15px rgba(255, 69, 0, 0.3)';
+        explainBtn.style.transform = 'translateY(-1px) !important';
+        explainBtn.style.boxShadow = '0 4px 15px rgba(255, 69, 0, 0.3) !important';
     });
     explainBtn.addEventListener('mouseleave', () => {
-        explainBtn.style.transform = 'translateY(0)';
-        explainBtn.style.boxShadow = 'none';
+        explainBtn.style.transform = 'translateY(0) !important';
+        explainBtn.style.boxShadow = 'none !important';
     });
     explainBtn.addEventListener('click', () => {
         onAsk('explain', selectedText, '');
@@ -225,25 +234,23 @@ function createBubbleComponent(selectedText, onAsk) {
         transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
     `;
 
-
     customInput.addEventListener('focus', () => {
-        customInput.style.borderColor = 'rgba(255, 20, 147, 0.5)';
-        customInput.style.background = 'rgba(20, 20, 20, 0.8)';
-        customInput.style.boxShadow = '0 0 0 3px rgba(255, 20, 147, 0.1), 0 4px 12px rgba(0, 0, 0, 0.2)';
-        customInput.style.transform = 'translateY(-1px)';
+        customInput.style.borderColor = 'rgba(255, 20, 147, 0.5) !important';
+        customInput.style.background = 'rgba(20, 20, 20, 0.8) !important';
+        customInput.style.boxShadow = '0 0 0 3px rgba(255, 20, 147, 0.1), 0 4px 12px rgba(0, 0, 0, 0.2) !important';
+        customInput.style.transform = 'translateY(-1px) !important';
     });
     customInput.addEventListener('blur', () => {
-        customInput.style.borderColor = 'rgba(255, 255, 255, 0.1)';
-        customInput.style.background = 'rgba(20, 20, 20, 0.6)';
-        customInput.style.boxShadow = 'none';
-        customInput.style.transform = 'translateY(0)';
+        customInput.style.borderColor = 'rgb(255, 255, 255) !important';
+        customInput.style.background = 'rgba(20, 20, 20, 0.6) !important';
+        customInput.style.boxShadow = 'none !important';
+        customInput.style.transform = 'translateY(0) !important';
     });
     
     customInput.style.setProperty('--placeholder-color', 'rgb(255, 255, 255)')
     const style = document.createElement('style');
-    style.textContent = ` textarea { --placeholder-color: rgb(255, 255, 255); } textarea::placeholder { color: var(--placeholder-color) !important; } `; document.head.appendChild(style);
+    style.textContent = ` textarea { --placeholder-color: rgb(255, 255, 255) !important; } textarea::placeholder { color: var(--placeholder-color) !important; } `; document.head.appendChild(style);
     document.head.appendChild(style);
-
 
     bubble.appendChild(customInput);
 
@@ -270,12 +277,12 @@ function createBubbleComponent(selectedText, onAsk) {
 
     // Add shimmer effect on hover
     askButton.addEventListener('mouseenter', () => {
-        askButton.style.transform = 'translateY(-1px)';
-        askButton.style.boxShadow = '0 4px 15px rgba(255, 20, 147, 0.3), 0 2px 8px rgba(0, 0, 0, 0.1)';
+        askButton.style.transform = 'translateY(-1px) !important';
+        askButton.style.boxShadow = '0 4px 15px rgba(255, 20, 147, 0.3), 0 2px 8px rgba(0, 0, 0, 0.1) !important';
     });
     askButton.addEventListener('mouseleave', () => {
-        askButton.style.transform = 'translateY(0)';
-        askButton.style.boxShadow = 'none';
+        askButton.style.transform = 'translateY(0) !important';
+        askButton.style.boxShadow = 'none !important';
     });
     askButton.addEventListener('click', () => {
         const customQuestion = customInput.value.trim();
@@ -289,7 +296,7 @@ function createBubbleComponent(selectedText, onAsk) {
     // Add close functionality (click outside to close)
     const closeHandler = (event) => {
         if (!bubble.contains(event.target)) {
-            bubble.style.animation = 'slideOut 0.2s cubic-bezier(0.4, 0, 0.2, 1) forwards';
+            bubble.style.animation = 'slideOut 0.2s cubic-bezier(0.4, 0, 0.2, 1) forwards !important';
             setTimeout(() => {
                 bubble.remove();
                 document.removeEventListener('click', closeHandler);
@@ -304,12 +311,12 @@ function createBubbleComponent(selectedText, onAsk) {
         style.textContent = `
             @keyframes slideOut {
                 from {
-                    opacity: 1;
-                    transform: translateY(0) scale(1);
+                    opacity: 1 !important;
+                    transform: translateY(0) scale(1) !important;
                 }
                 to {
-                    opacity: 0;
-                    transform: translateY(-10px) scale(0.95);
+                    opacity: 0 !important;
+                    transform: translateY(-10px) scale(0.95) !important;
                 }
             }
         `;
@@ -324,7 +331,7 @@ function createBubbleComponent(selectedText, onAsk) {
     // Add escape key to close
     const escapeHandler = (event) => {
         if (event.key === 'Escape') {
-            bubble.style.animation = 'slideOut 0.2s cubic-bezier(0.4, 0, 0.2, 1) forwards';
+            bubble.style.animation = 'slideOut 0.2s cubic-bezier(0.4, 0, 0.2, 1) forwards !important';
             setTimeout(() => {
                 bubble.remove();
                 document.removeEventListener('keydown', escapeHandler);
