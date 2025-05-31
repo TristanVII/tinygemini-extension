@@ -88,8 +88,68 @@ function openBubbleAtCursor(selectedText = null) {
     // Position the bubble
     positionBubble(bubble);
     
+    // Make bubble draggable
+    makeBubbleDraggable(bubble);
+    
     // Add to page
     document.body.appendChild(bubble);
+}
+
+// Make bubble draggable
+function makeBubbleDraggable(bubble) {
+    let isDragging = false;
+    let dragOffset = { x: 0, y: 0 };
+    
+    // Add mousedown event to start dragging
+    bubble.addEventListener('mousedown', (e) => {
+        // Don't start dragging if clicking on interactive elements
+        const isInteractive = e.target.matches('button, textarea, input') || 
+                             e.target.closest('button, textarea, input');
+        
+        if (!isInteractive) {
+            isDragging = true;
+            
+            const rect = bubble.getBoundingClientRect();
+            dragOffset.x = e.clientX - rect.left;
+            dragOffset.y = e.clientY - rect.top;
+            
+            bubble.style.cursor = 'grabbing';
+            bubble.style.userSelect = 'none';
+            
+            // Prevent default to avoid text selection
+            e.preventDefault();
+        }
+    });
+    
+    // Add mousemove event to handle dragging
+    document.addEventListener('mousemove', (e) => {
+        if (isDragging) {
+            const x = e.clientX - dragOffset.x;
+            const y = e.clientY - dragOffset.y;
+            
+            // Keep bubble within viewport bounds
+            const maxX = window.innerWidth - bubble.offsetWidth;
+            const maxY = window.innerHeight - bubble.offsetHeight;
+            
+            const boundedX = Math.max(0, Math.min(x, maxX));
+            const boundedY = Math.max(0, Math.min(y, maxY));
+            
+            bubble.style.left = boundedX + 'px';
+            bubble.style.top = boundedY + 'px';
+        }
+    });
+    
+    // Add mouseup event to stop dragging
+    document.addEventListener('mouseup', () => {
+        if (isDragging) {
+            isDragging = false;
+            bubble.style.cursor = 'grab';
+            bubble.style.userSelect = 'auto';
+        }
+    });
+    
+    // Add visual feedback for draggable area
+    bubble.style.cursor = 'grab';
 }
 
 // Handle Ask callback from bubble component
