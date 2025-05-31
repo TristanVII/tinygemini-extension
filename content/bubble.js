@@ -14,13 +14,13 @@ function createBubbleComponent(selectedText, onAsk) {
         background: rgba(30, 30, 30, 0.95) !important;
         border: 1px solid rgba(255, 255, 255, 0.08) !important;
         border-radius: 16px !important;
-        padding: 24px !important;
+        padding: 32px !important;
         box-shadow: 
             0 8px 32px rgba(0, 0, 0, 0.3) !important,
             0 2px 8px rgba(0, 0, 0, 0.2) !important,
             inset 0 1px 0 rgba(255, 255, 255, 0.05) !important;
         z-index: 999999 !important;
-        max-width: 380px !important;
+        max-width: 400px !important;
         min-width: 320px !important;
         font-family: 'Raleway', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
         font-size: 14px !important;
@@ -30,7 +30,7 @@ function createBubbleComponent(selectedText, onAsk) {
         display: block !important;
         box-sizing: border-box !important;
         backdrop-filter: blur(10px) !important;
-        animation: slideIn 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+        animation: slideIn 0.4s cubic-bezier(0.4, 0, 0.2, 1) !important;
     `;
 
     // Add animation keyframes
@@ -41,7 +41,7 @@ function createBubbleComponent(selectedText, onAsk) {
             @keyframes slideIn {
                 from {
                     opacity: 0 !important;
-                    transform: translateY(10px) scale(0.95) !important;
+                    transform: translateY(20px) scale(0.95) !important;
                 }
                 to {
                     opacity: 1 !important;
@@ -70,12 +70,12 @@ function createBubbleComponent(selectedText, onAsk) {
         selectedTextDiv.textContent = truncatedText;
         selectedTextDiv.style.cssText = `
             font-weight: 400 !important;
-            padding: 12px 16px !important;
+            padding: 14px 16px !important;
             cursor: pointer !important;
             background: rgba(20, 20, 20, 0.6) !important;
             border: 1px solid rgba(255, 255, 255, 0.1) !important;
             border-radius: 12px !important;
-            color: #f5f5f5 !important;
+            color: #e8e8e8 !important;
             font-size: 14px !important;
             display: block !important;
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
@@ -91,9 +91,9 @@ function createBubbleComponent(selectedText, onAsk) {
                 bottom: 100% !important;
                 left: 0 !important;
                 right: 0 !important;
-                background: rgb(20, 20, 20) !important;
+                background: rgba(30, 30, 30, 0.95) !important;
                 color: #e8e8e8 !important;
-                padding: 12px 16px !important;
+                padding: 16px !important;
                 border-radius: 12px !important;
                 font-size: 13px !important;
                 opacity: 0 !important;
@@ -103,8 +103,11 @@ function createBubbleComponent(selectedText, onAsk) {
                 word-wrap: break-word !important;
                 z-index: 1000001 !important;
                 display: block !important;
-                border: 1px solid rgba(255, 255, 255, 0.1) !important;
-                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3) !important;
+                border: 1px solid rgba(255, 255, 255, 0.08) !important;
+                box-shadow: 
+                    0 8px 32px rgba(0, 0, 0, 0.3) !important,
+                    0 2px 8px rgba(0, 0, 0, 0.2) !important,
+                    inset 0 1px 0 rgba(255, 255, 255, 0.05) !important;
                 backdrop-filter: blur(10px) !important;
                 pointer-events: none !important;
                 max-width: 320px !important;
@@ -113,18 +116,19 @@ function createBubbleComponent(selectedText, onAsk) {
 
             // Add hover events with dark theme transitions
             selectedTextDiv.addEventListener('mouseenter', (e) => {
-                console.log('Mouse entered selected text div');
                 selectedTextDiv.style.setProperty('background', 'rgba(20, 20, 20, 0.8)', 'important');
                 selectedTextDiv.style.setProperty('border-color', 'rgba(255, 20, 147, 0.3)', 'important');
+                selectedTextDiv.style.setProperty('box-shadow', '0 0 0 3px rgba(255, 20, 147, 0.1), 0 4px 12px rgba(0, 0, 0, 0.2)', 'important');
+                selectedTextDiv.style.setProperty('transform', 'translateY(-1px)', 'important');
                 hoverPopup.style.setProperty('opacity', '1', 'important');
                 hoverPopup.style.setProperty('visibility', 'visible', 'important');
-                console.log('Popup should be visible now');
             });
 
             selectedTextDiv.addEventListener('mouseleave', (e) => {
-                console.log('Mouse left selected text div');
                 selectedTextDiv.style.setProperty('background', 'rgba(20, 20, 20, 0.6)', 'important');
                 selectedTextDiv.style.setProperty('border-color', 'rgba(255, 255, 255, 0.1)', 'important');
+                selectedTextDiv.style.setProperty('box-shadow', 'none', 'important');
+                selectedTextDiv.style.setProperty('transform', 'translateY(0)', 'important');
                 hoverPopup.style.setProperty('opacity', '0', 'important');
                 hoverPopup.style.setProperty('visibility', 'hidden', 'important');
             });
@@ -142,7 +146,7 @@ function createBubbleComponent(selectedText, onAsk) {
         actionsContainer.style.cssText = `
             display: flex !important;
             gap: 12px !important;
-            margin-bottom: 20px !important;
+            margin-bottom: 24px !important;
         `;
 
         // Create Summarize button with gradient
@@ -150,13 +154,13 @@ function createBubbleComponent(selectedText, onAsk) {
         summarizeBtn.textContent = 'Summarize';
         summarizeBtn.style.cssText = `
             flex: 1 !important;
-            background: linear-gradient(135deg, #ff1493 0%, #ff0000 50%, #ff4500 100%) !important;
+            background: linear-gradient(135deg, #ff1493 0%, #ff0000 25%, #ff4500 75%, #ffa500 100%) !important;
             color: white !important;
             border: none !important;
             border-radius: 12px !important;
-            padding: 12px 16px !important;
+            padding: 14px 24px !important;
             cursor: pointer !important;
-            font-size: 13px !important;
+            font-size: 14px !important;
             font-weight: 500 !important;
             letter-spacing: 0.5px !important;
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
@@ -169,7 +173,7 @@ function createBubbleComponent(selectedText, onAsk) {
         // Add shimmer effect
         summarizeBtn.addEventListener('mouseenter', () => {
             summarizeBtn.style.transform = 'translateY(-1px) !important';
-            summarizeBtn.style.boxShadow = '0 4px 15px rgba(255, 20, 147, 0.3) !important';
+            summarizeBtn.style.boxShadow = '0 4px 15px rgba(255, 20, 147, 0.3), 0 2px 8px rgba(0, 0, 0, 0.1) !important';
         });
         summarizeBtn.addEventListener('mouseleave', () => {
             summarizeBtn.style.transform = 'translateY(0) !important';
@@ -191,13 +195,13 @@ function createBubbleComponent(selectedText, onAsk) {
         explainBtn.textContent = 'Explain';
         explainBtn.style.cssText = `
             flex: 1 !important;
-            background: linear-gradient(135deg, #ff4500 0%, #ffa500 50%, #ff1493 100%) !important;
+            background: linear-gradient(135deg, #ff1493 0%, #ff0000 25%, #ff4500 75%, #ffa500 100%) !important;
             color: white !important;
             border: none !important;
             border-radius: 12px !important;
-            padding: 12px 16px !important;
+            padding: 14px 24px !important;
             cursor: pointer !important;
-            font-size: 13px !important;
+            font-size: 14px !important;
             font-weight: 500 !important;
             letter-spacing: 0.5px !important;
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
@@ -209,7 +213,7 @@ function createBubbleComponent(selectedText, onAsk) {
 
         explainBtn.addEventListener('mouseenter', () => {
             explainBtn.style.transform = 'translateY(-1px) !important';
-            explainBtn.style.boxShadow = '0 4px 15px rgba(255, 69, 0, 0.3) !important';
+            explainBtn.style.boxShadow = '0 4px 15px rgba(255, 20, 147, 0.3), 0 2px 8px rgba(0, 0, 0, 0.1) !important';
         });
         explainBtn.addEventListener('mouseleave', () => {
             explainBtn.style.transform = 'translateY(0) !important';
@@ -233,18 +237,18 @@ function createBubbleComponent(selectedText, onAsk) {
 
     // Custom question input with dark theme
     const customInput = document.createElement('textarea');
-    customInput.placeholder = 'Custom question text...';
+    customInput.placeholder = 'Ask a custom question...';
     customInput.style.cssText = `
         width: 100% !important;
         background: rgba(20, 20, 20, 0.6) !important;
-        border: 1px solid rgb(255, 255, 255) !important;
+        border: 1px solid rgba(255, 255, 255, 0.1) !important;
         border-radius: 12px !important;
         padding: 14px 16px !important;
         font-size: 14px !important;
         font-family: inherit !important;
         resize: vertical !important;
         min-height: 80px !important;
-        margin-bottom: 20px !important;
+        margin-bottom: 24px !important;
         box-sizing: border-box !important;
         outline: none !important;
         color: #e8e8e8 !important;
@@ -259,16 +263,23 @@ function createBubbleComponent(selectedText, onAsk) {
         customInput.style.transform = 'translateY(-1px) !important';
     });
     customInput.addEventListener('blur', () => {
-        customInput.style.borderColor = 'rgb(255, 255, 255) !important';
+        customInput.style.borderColor = 'rgba(255, 255, 255, 0.1) !important';
         customInput.style.background = 'rgba(20, 20, 20, 0.6) !important';
         customInput.style.boxShadow = 'none !important';
         customInput.style.transform = 'translateY(0) !important';
     });
 
-    customInput.style.setProperty('--placeholder-color', 'rgb(255, 255, 255)')
-    const style = document.createElement('style');
-    style.textContent = ` textarea { --placeholder-color: rgb(255, 255, 255) !important; } textarea::placeholder { color: var(--placeholder-color) !important; } `; document.head.appendChild(style);
-    document.head.appendChild(style);
+    // Update placeholder color
+    if (!document.getElementById('bubble-placeholder-style')) {
+        const style = document.createElement('style');
+        style.id = 'bubble-placeholder-style';
+        style.textContent = `
+            #ai-cursor-bubble textarea::placeholder {
+                color: rgba(184, 184, 184, 0.6) !important;
+            }
+        `;
+        document.head.appendChild(style);
+    }
 
     initialContent.appendChild(customInput);
 
@@ -328,49 +339,24 @@ function createBubbleComponent(selectedText, onAsk) {
         padding: 40px 20px !important;
     `;
 
-    // Create loading spinner
-    const loadingSpinner = document.createElement('div');
-    loadingSpinner.style.cssText = `
-        width: 40px !important;
-        height: 40px !important;
-        border: 3px solid rgba(255, 255, 255, 0.1) !important;
-        border-top: 3px solid #ff1493 !important;
-        border-radius: 50% !important;
-        animation: spin 1s linear infinite !important;
-        margin: 0 auto 20px auto !important;
-        display: block !important;
-    `;
-
-    // Add spinner animation
-    if (!document.getElementById('spinner-animation')) {
-        const style = document.createElement('style');
-        style.id = 'spinner-animation';
-        style.textContent = `
-            @keyframes spin {
-                0% { transform: rotate(0deg) !important; }
-                100% { transform: rotate(360deg) !important; }
-            }
-        `;
-        document.head.appendChild(style);
-    }
-
     const loadingText = document.createElement('div');
-    loadingText.textContent = 'Getting AI response...';
+    loadingText.textContent = 'Thinking...';
     loadingText.style.cssText = `
-        color: #e8e8e8 !important;
+        color: #f5f5f5 !important;
         font-size: 16px !important;
-        font-weight: 500 !important;
+        font-weight: 300 !important;
         margin-bottom: 10px !important;
+        letter-spacing: 0.5px !important;
     `;
 
     const loadingSubtext = document.createElement('div');
     loadingSubtext.textContent = 'Please wait while we process your request';
     loadingSubtext.style.cssText = `
-        color: rgba(255, 255, 255, 0.6) !important;
+        color: #b8b8b8 !important;
         font-size: 13px !important;
+        font-weight: 400 !important;
     `;
 
-    loadingContainer.appendChild(loadingSpinner);
     loadingContainer.appendChild(loadingText);
     loadingContainer.appendChild(loadingSubtext);
 
@@ -412,11 +398,11 @@ function createBubbleComponent(selectedText, onAsk) {
     copyButton.textContent = 'Copy Response';
     copyButton.style.cssText = `
         width: 100% !important;
-        background: linear-gradient(135deg, #28a745 0%, #20c997 50%, #17a2b8 100%) !important;
+    background: linear-gradient(90deg, #ff1493, #ff0000, #ff4500, #ffa500);
         color: white !important;
         border: none !important;
         border-radius: 12px !important;
-        padding: 12px 24px !important;
+        padding: 14px 24px !important;
         font-size: 14px !important;
         font-weight: 500 !important;
         letter-spacing: 0.5px !important;
@@ -429,7 +415,7 @@ function createBubbleComponent(selectedText, onAsk) {
 
     copyButton.addEventListener('mouseenter', () => {
         copyButton.style.transform = 'translateY(-1px) !important';
-        copyButton.style.boxShadow = '0 4px 15px rgba(40, 167, 69, 0.3) !important';
+        copyButton.style.boxShadow = '0 4px 15px rgba(40, 167, 69, 0.3), 0 2px 8px rgba(0, 0, 0, 0.1) !important';
     });
     copyButton.addEventListener('mouseleave', () => {
         copyButton.style.transform = 'translateY(0) !important';
@@ -452,9 +438,9 @@ function createBubbleComponent(selectedText, onAsk) {
         width: 100% !important;
         background: rgba(60, 60, 60, 0.8) !important;
         color: #e8e8e8 !important;
-        border: 1px solid rgba(255, 255, 255, 0.2) !important;
+        border: 1px solid rgba(255, 255, 255, 0.1) !important;
         border-radius: 12px !important;
-        padding: 12px 24px !important;
+        padding: 14px 24px !important;
         font-size: 14px !important;
         font-weight: 500 !important;
         letter-spacing: 0.5px !important;
@@ -467,10 +453,12 @@ function createBubbleComponent(selectedText, onAsk) {
     backButton.addEventListener('mouseenter', () => {
         backButton.style.background = 'rgba(80, 80, 80, 0.8) !important';
         backButton.style.transform = 'translateY(-1px) !important';
+        backButton.style.boxShadow = '0 2px 8px rgba(0, 0, 0, 0.2) !important';
     });
     backButton.addEventListener('mouseleave', () => {
         backButton.style.background = 'rgba(60, 60, 60, 0.8) !important';
         backButton.style.transform = 'translateY(0) !important';
+        backButton.style.boxShadow = 'none !important';
     });
     backButton.addEventListener('click', () => {
         console.log('Back button clicked');
@@ -488,11 +476,6 @@ function createBubbleComponent(selectedText, onAsk) {
 
     // Function to show loading
     function showLoading() {
-        console.log('showLoading called');
-        console.log('initialContent:', initialContent);
-        console.log('loadingContainer:', loadingContainer);
-        console.log('responseContainer:', responseContainer);
-        
         initialContent.style.display = 'none';
         responseContainer.style.display = 'none';
         loadingContainer.style.display = 'block';
@@ -532,19 +515,27 @@ function createBubbleComponent(selectedText, onAsk) {
         responseContainer.style.display = 'none';
         initialContent.style.display = 'block';
         
-        // Show error message temporarily
+        // Show error message temporarily - matching popup.css notification style
         const errorDiv = document.createElement('div');
         errorDiv.style.cssText = `
             position: fixed !important;
             top: 20px !important;
             right: 20px !important;
-            background: linear-gradient(135deg, #dc3545, #c82333) !important;
-            color: white !important;
-            padding: 12px 20px !important;
-            border-radius: 8px !important;
+            background: rgba(244, 67, 54, 0.1) !important;
+            color: #e57373 !important;
+            border: 1px solid rgba(244, 67, 54, 0.2) !important;
+            border-radius: 12px !important;
+            padding: 16px 20px !important;
             font-size: 14px !important;
+            font-weight: 400 !important;
             z-index: 1000000 !important;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3) !important;
+            box-shadow: 
+                0 8px 32px rgba(0, 0, 0, 0.3) !important,
+                0 2px 8px rgba(0, 0, 0, 0.2) !important,
+                inset 0 1px 0 rgba(255, 255, 255, 0.05) !important;
+            backdrop-filter: blur(10px) !important;
+            max-width: 360px !important;
+            font-family: 'Raleway', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
         `;
         errorDiv.textContent = errorMessage;
         document.body.appendChild(errorDiv);
@@ -586,7 +577,7 @@ function createBubbleComponent(selectedText, onAsk) {
                 }
                 to {
                     opacity: 0 !important;
-                    transform: translateY(-10px) scale(0.95) !important;
+                    transform: translateY(-20px) scale(0.95) !important;
                 }
             }
         `;
