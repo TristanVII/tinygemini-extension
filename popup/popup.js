@@ -32,7 +32,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const apiKey = apiKeyInput.value.trim();
         
         if (!apiKey) {
-            alert('Please enter an API key');
+            addNotification(notificationList, 'Please enter an API key', NOTIFICATION_TYPES.ERROR);
             return;
         }
         
@@ -42,7 +42,7 @@ document.addEventListener('DOMContentLoaded', function() {
         
         chrome.storage.sync.set({ geminiApiKey: apiKey }, function() {
             if (chrome.runtime.lastError) {
-                alert('Error saving API key');
+                addNotification(notificationList, 'Error saving API key', NOTIFICATION_TYPES.ERROR);
                 saveBtn.disabled = false;
                 saveBtn.textContent = 'Save API Key';
             } else {
